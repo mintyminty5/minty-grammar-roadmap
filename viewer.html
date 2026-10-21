@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>문법 앱 · Minty.E</title>
+<style>
+:root{--ink:#17382a;--muted:#587163;--paper:#f6fbf6;--line:#dbe9dd;--accent:#2c7650;--card:#fff}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;color:var(--ink);background:var(--paper)}
+.viewer-bar{height:72px;display:flex;align-items:center;gap:14px;padding:12px 22px;padding-top:max(12px,env(safe-area-inset-top));border-bottom:1px solid var(--line);background:rgba(246,251,246,.94);backdrop-filter:blur(16px);position:relative;z-index:2}
+.home{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:1px solid #b9d8c0;border-radius:999px;background:#fff;color:var(--accent);font-weight:800;text-decoration:none;white-space:nowrap;box-shadow:0 4px 12px rgba(35,78,50,.08)}
+.home:focus-visible,.new-tab:focus-visible{outline:3px solid rgba(44,118,80,.3);outline-offset:2px}.viewer-meta{min-width:0;flex:1}.kicker{font-size:.67rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:800}.title{font-size:.98rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}.new-tab{font-size:.78rem;color:var(--muted);font-weight:700;text-decoration:none;white-space:nowrap}.frame-wrap{height:calc(100dvh - 72px);position:relative;background:#fff}.app-frame{display:block;width:100%;height:100%;border:0;background:#fff}.loading{position:absolute;inset:0;display:grid;place-items:center;background:var(--paper);color:var(--muted);font-size:.9rem;pointer-events:none;transition:opacity .2s}.loading.is-ready{opacity:0}.error{display:none;position:absolute;inset:0;place-items:center;padding:24px;text-align:center;color:var(--muted)}.error strong{display:block;color:var(--ink);margin-bottom:8px}
+@media(max-width:600px){.viewer-bar{height:64px;padding:8px 12px;padding-top:max(8px,env(safe-area-inset-top));gap:8px}.home{min-height:44px;padding:0 12px;font-size:.8rem}.kicker{font-size:.58rem}.title{font-size:.84rem}.new-tab{font-size:0}.new-tab::after{content:'↗';font-size:1.15rem}.frame-wrap{height:calc(100dvh - 64px)}}
+</style>
+</head>
+<body>
+<header class="viewer-bar">
+<a class="home" href="./" aria-label="문법 링크트리 홈으로 돌아가기">← 홈</a>
+<div class="viewer-meta"><div class="kicker">Minty.E Grammar App</div><div class="title" id="appTitle">문법 웹앱</div></div>
+<a class="new-tab" id="newTab" href="#" target="_blank" rel="noopener">새 탭에서 열기</a>
+</header>
+<main class="frame-wrap">
+<div class="loading" id="loading">웹앱을 불러오는 중…</div>
+<div class="error" id="error"><div><strong>앱을 불러오지 못했어요.</strong><span>홈으로 돌아가 다른 문법 앱을 선택해 주세요.</span></div></div>
+<iframe class="app-frame" id="appFrame" title="문법 학습 웹앱"></iframe>
+</main>
+<script>
+(function(){
+  var p=new URLSearchParams(location.search), raw=p.get('url'), title=p.get('title')||'문법 웹앱';
+  var allowed=['mintyminty5.github.io','mintyenglishpp.netlify.app','mintyenglish-participle.netlify.app','minty-relativec-share.netlify.app'];
+  var titleEl=document.getElementById('appTitle'),frame=document.getElementById('appFrame'),loading=document.getElementById('loading'),error=document.getElementById('error'),newTab=document.getElementById('newTab');
+  titleEl.textContent=title;document.title=title+' · Minty.E';
+  try{var u=new URL(raw||'');if(!/^https?:$/.test(u.protocol)||allowed.indexOf(u.hostname)===-1)throw new Error('blocked');frame.src=u.href;newTab.href=u.href;frame.addEventListener('load',function(){loading.classList.add('is-ready')});setTimeout(function(){loading.classList.add('is-ready')},4500)}catch(e){loading.style.display='none';error.style.display='grid';newTab.style.display='none'}
+})();
+</script>
+</body>
+</html>
