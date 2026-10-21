@@ -27,7 +27,7 @@
 <script>
 (function(){
   var p=new URLSearchParams(location.search), raw=p.get('url'), title=p.get('title')||'문법 웹앱';
-  var allowed=['mintyminty5.github.io','mintyenglishpp.netlify.app','mintyenglish-participle.netlify.app','minty-relativec-share.netlify.app'];
+  var allowed=['mintyminty5.github.io','mintyenglishpp.netlify.app','mintyenglish-participle.netlify.app','minty-relativec-share.netlify.app','3min-relativec-share.netlify.app'];
   var titleEl=document.getElementById('appTitle'),frame=document.getElementById('appFrame'),loading=document.getElementById('loading'),error=document.getElementById('error'),newTab=document.getElementById('newTab');
   titleEl.textContent=title;document.title=title+' · Minty.E';
   try{var u=new URL(raw||'');if(!/^https?:$/.test(u.protocol)||allowed.indexOf(u.hostname)===-1)throw new Error('blocked');frame.src=u.href;newTab.href=u.href;frame.addEventListener('load',function(){loading.classList.add('is-ready')});setTimeout(function(){loading.classList.add('is-ready')},4500)}catch(e){loading.style.display='none';error.style.display='grid';newTab.style.display='none'}
